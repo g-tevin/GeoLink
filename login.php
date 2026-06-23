@@ -1,7 +1,5 @@
 <?php
-// ============================================
-// LOGIN PAGE - GeoLink
-// ============================================
+
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
@@ -47,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     $_SESSION['role'] = $user['role'];
                     $_SESSION['login_time'] = time();
                     
-                    // Redirect to dashboard
-                    header("Location: dashboard.php");
+                    // Redirect 
+                    header("Location: home.php");
                     exit();
                 } else {
                     $error_message = "Invalid password!";

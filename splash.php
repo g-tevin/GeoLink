@@ -11,7 +11,7 @@ $app_tagline = 'Connect. Explore. Innovate.';
 
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
+    header('Location: home.php');
     exit();
 }
 
@@ -46,6 +46,7 @@ $loading_messages = [
     'Almost there...',
     'Welcome to GeoLink!'
 ];
+$timestamp = time();
 ?>
 
 
@@ -84,14 +85,14 @@ $loading_messages = [
             
             <p class="splash-tagline"><?php echo htmlspecialchars($app_tagline); ?></p>
             
-            // loading dots 
+            <!-- loading dots--> 
             <div class="splash-loader">
                 <div class="loader-dot"></div>
                 <div class="loader-dot"></div>
                 <div class="loader-dot"></div>
             </div>
 
-            //Loading text
+            <!-- Loading text -->
             <p class="splash-text" id="loadingText">
                 <?php echo htmlspecialchars($random_message); ?>
             </p>
