@@ -1,117 +1,152 @@
 <?php
-// Start session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-// Include database connection
+session_start();
+
 require_once 'config/database.php';
 
 $error_message = "";
 $success_message = "";
 
-// Handle signup form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
-    // Get and sanitize inputs
-    $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $id_number = mysqli_real_escape_string($conn, $_POST['id_number']);
-    $university = mysqli_real_escape_string($conn, $_POST['university']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $age = (int)$_POST['age'];
-    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
+    $phone = trim($_POST['phone']);
+    $id_number = trim($_POST['id_number']);
+    $university = trim($_POST['university']);
+    $email = trim($_POST['email']);
+    $age = (int) $_POST['age'];
+    $gender = trim($_POST['gender']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Validation array
     $errors = [];
 
-    // Check required fields
-    if (empty($first_name) || empty($last_name) || empty($phone) || empty($id_number) || 
-        empty($university) || empty($email) || empty($age) || empty($gender) || 
-        empty($password) || empty($confirm_password)) {
-        $errors[] = 'All fields are required';
+    if (
+        empty($first_name) ||
+        empty($last_name) ||
+        empty($phone) ||
+        empty($id_number) ||
+        empty($university) ||
+        empty($email) ||
+        empty($age) ||
+        empty($gender) ||
+        empty($password) ||
+        empty($confirm_password)
+    ) {
+        $errors[] = "All fields are required";
     }
 
-    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Invalid email format';
+        $errors[] = "Invalid email format";
     }
 
-    // Validate age
     if ($age < 18 || $age > 100) {
-        $errors[] = 'Age must be between 18 and 100';
+        $errors[] = "Age must be between 18 and 100";
     }
 
-    // Validate gender
-    if (!in_array($gender, ['male', 'female'])) {
-        $errors[] = 'Invalid gender selection';
-    }
-
-    // Validate password
-    if (strlen($password) < 6) {
-        $errors[] = 'Password must be at least 6 characters';
-    }
-
-    // Check password match
     if ($password !== $confirm_password) {
-        $errors[] = 'Passwords do not match';
+        $errors[] = "Passwords do not match";
     }
 
-    // Check if email already exists
-    if (empty($errors)) {
-        $check_email = "SELECT id FROM users WHERE email = ?";
-        $stmt = mysqli_prepare($conn, $check_email);
-        mysqli_stmt_bind_param($stmt, "s", $email);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_store_result($stmt);
-        
-        if (mysqli_stmt_num_rows($stmt) > 0) {
-            $errors[] = 'Email already registered';
-        }
-        mysqli_stmt_close($stmt);
+    if (strlen($password) < 6) {
+        $errors[] = "Password must be at least 6 characters";
     }
 
-    // Check if ID number already exists
-    if (empty($errors)) {
-        $check_id = "SELECT id FROM users WHERE id_number = ?";
-        $stmt = mysqli_prepare($conn, $check_id);
-        mysqli_stmt_bind_param($stmt, "s", $id_number);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_store_result($stmt);
-        
-        if (mysqli_stmt_num_rows($stmt) > 0) {
-            $errors[] = 'ID number already registered';
-        }
-        mysqli_stmt_close($stmt);
-    }
+    try {
 
-    // If there are errors, store them
-    if (!empty($errors)) {
-        $error_message = implode('; ', $errors);
-    } else {
-        // Hash password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        // Insert user into database
-        $sql = "INSERT INTO users (first_name, last_name, phone, id_number, university, email, age, gender, password, role) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'user')";
-        
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ssssssiss", 
-            $first_name, $last_name, $phone, $id_number, $university, $email, $age, $gender, $hashed_password
+        $stmt = $conn->prepare(
+            "SELECT id FROM users WHERE email = :email"
         );
 
-        if (mysqli_stmt_execute($stmt)) {
-            $success_message = "Account created successfully! Please login.";
-        } else {
-            $error_message = "Registration failed. Please try again.";
+        $stmt->execute([
+            'email' => $email
+        ]);
+
+        if ($stmt->fetch()) {
+            $errors[] = "Email already registered";
         }
-        mysqli_stmt_close($stmt);
+
+        $stmt = $conn->prepare(
+            "SELECT id FROM users WHERE id_number = :id_number"
+        );
+
+        $stmt->execute([
+            'id_number' => $id_number
+        ]);
+
+        if ($stmt->fetch()) {
+            $errors[] = "ID number already registered";
+        }
+
+        if (empty($errors)) {
+
+            $hashed_password =
+                password_hash(
+                    $password,
+                    PASSWORD_DEFAULT
+                );
+
+            $sql = "
+            INSERT INTO users
+            (
+                first_name,
+                last_name,
+                phone,
+                id_number,
+                university,
+                email,
+                age,
+                gender,
+                password,
+                role
+            )
+            VALUES
+            (
+                :first_name,
+                :last_name,
+                :phone,
+                :id_number,
+                :university,
+                :email,
+                :age,
+                :gender,
+                :password,
+                'user'
+            )";
+
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute([
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'phone' => $phone,
+                'id_number' => $id_number,
+                'university' => $university,
+                'email' => $email,
+                'age' => $age,
+                'gender' => $gender,
+                'password' => $hashed_password
+            ]);
+
+            $success_message =
+                "Account created successfully!";
+
+        }
+
+    } catch (PDOException $e) {
+
+        $errors[] = "Database error occurred.";
+
+    }
+
+    if (!empty($errors)) {
+        $error_message = implode("<br>", $errors);
     }
 }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

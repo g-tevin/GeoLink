@@ -1,68 +1,76 @@
 <?php
 
+session_start();
 
-// Start session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Redirect to splash if not shown
 if (!isset($_SESSION['splash_shown'])) {
     $_SESSION['splash_shown'] = true;
     header('Location: splash.php');
     exit();
 }
 
-// Include database connection
 require_once 'config/database.php';
 
-// Configuration
-$app_name = 'GeoLink';
 $error_message = "";
-$success_message = "";
 
-// Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
 
-    // Validate inputs
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
     if (empty($email) || empty($password)) {
+
         $error_message = "Please fill in all fields";
+
     } else {
+
         try {
-            // Prepare SQL query
-            $sql = "SELECT id, email, password, role FROM users WHERE email = :email";
+
+            $sql = "
+                SELECT id, email, password, role
+                FROM users
+                WHERE email = :email
+            ";
+
             $stmt = $conn->prepare($sql);
-            $stmt->execute(['email' => $email]);
-            
-            if ($user = $stmt->fetch()) {
-                // Verify password
+
+            $stmt->execute([
+                'email' => $email
+            ]);
+
+            $user = $stmt->fetch();
+
+            if ($user) {
+
                 if (password_verify($password, $user['password'])) {
-                    // Set session variables
+
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['role'] = $user['role'];
                     $_SESSION['login_time'] = time();
-                    
-                    // Redirect 
+
                     header("Location: home.php");
                     exit();
+
                 } else {
-                    $error_message = "Invalid password!";
+
+                    $error_message = "Invalid password";
+
                 }
+
             } else {
-                $error_message = "User not found!";
+                $error_message = "User not found";
             }
+
         } catch (PDOException $e) {
-            $error_message = "Login failed: " . $e->getMessage();
+
+            $error_message = "Login failed";
+
         }
     }
 }
 
-// Get current timestamp for cache busting
-$timestamp = time();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
