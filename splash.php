@@ -4,7 +4,7 @@ session_start();
 
 
 $splash_duration = 9000; 
-$redirect_url = 'login.php'; 
+$redirect_url = 'landing.php'; 
 $app_name = 'GeoLink';
 $app_tagline = 'Connect. Explore. Innovate.';
 

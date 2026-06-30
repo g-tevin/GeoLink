@@ -1,186 +1,404 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap');
+
+:root{
+    --navy:#0B1F3A;
+    --navy-mid:#152D50;
+    --emerald:#1A9E75;
+    --emerald-light:#22C990;
+    --cream:#F7F9FC;
+    --white:#FFFFFF;
+    --text-dark:#0B1F3A;
+    --text-mid:#3D5068;
+    --text-muted:#7A90A8;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #ffffff;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    overflow: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:linear-gradient(
+        135deg,
+        #0B1F3A 0%,
+        #1A3A5C 45%,
+        #0F4A3A 100%
+    );
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    position:relative;
+
 }
 
 
-.splash-container {
-    background: #ffffff;
-    width: 100%;
-    max-width: 500px;
-    padding: 60px 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    animation: splashFadeIn 0.6s ease-in-out;
-    text-align: center;
+
+/* Decorative background */
+
+body::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:radial-gradient(circle,#ffffff 1px,transparent 1px);
+
+    background-size:32px 32px;
+
+    opacity:.05;
+
 }
 
 
-.splash-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+
+/* ===========================
+        CONTAINER
+=========================== */
+
+.splash-container{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    max-width:520px;
+
+    background:#ffffff;
+
+    padding:60px 45px;
+
+    border-radius:24px;
+
+    text-align:center;
+
+    box-shadow:
+    0 30px 70px rgba(11,31,58,.35);
+
+    animation:splashFadeIn .7s ease;
+
+}
+
+.splash-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
 }
 
 
 
-/* Fade in animation for the container */
-@keyframes splashFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
+/* ===========================
+        LOGO
+=========================== */
+
+.splash-icon{
+
+    margin-bottom:30px;
+
+    animation:iconPulse 2.2s infinite ease-in-out;
+
+}
+
+.icon-placeholder{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        rgba(26,158,117,.12),
+        rgba(34,201,144,.22)
+    );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:2px solid rgba(26,158,117,.18);
+
+}
+
+.icon-placeholder svg{
+
+    width:82px;
+
+    height:82px;
+
+    fill:var(--emerald);
+
+}
+
+.icon-placeholder img{
+
+    width:82px;
+
+    height:82px;
+
+    object-fit:contain;
+
+}
+
+
+
+/* ===========================
+          TITLE
+=========================== */
+
+.splash-title{
+
+    font-family:'Sora',sans-serif;
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:var(--navy);
+
+    margin-bottom:10px;
+
+    letter-spacing:-1px;
+
+}
+
+.splash-title span{
+
+    color:var(--emerald);
+
+}
+
+
+
+/* ===========================
+        TAGLINE
+=========================== */
+
+.splash-tagline{
+
+    color:var(--text-mid);
+
+    font-size:15px;
+
+    line-height:1.8;
+
+    margin-bottom:40px;
+
+}
+
+
+
+/* ===========================
+        LOADER
+=========================== */
+
+.splash-loader{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+.loader-dot{
+
+    width:13px;
+
+    height:13px;
+
+    border-radius:50%;
+
+    background:var(--emerald);
+
+    animation:loaderBounce 1.5s infinite both;
+
+}
+
+.loader-dot:nth-child(1){
+
+    animation-delay:-0.4s;
+
+}
+
+.loader-dot:nth-child(2){
+
+    animation-delay:-0.2s;
+
+}
+
+.loader-dot:nth-child(3){
+
+    animation-delay:0s;
+
+}
+
+
+
+/* ===========================
+      LOADING TEXT
+=========================== */
+
+.splash-text{
+
+    color:var(--text-muted);
+
+    font-size:14px;
+
+    font-weight:500;
+
+    letter-spacing:1px;
+
+    animation:textPulse 1.8s infinite;
+
+}
+
+
+
+/* ===========================
+      ANIMATIONS
+=========================== */
+
+@keyframes splashFadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px) scale(.95);
+
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
     }
+
 }
 
-/* Pulse animation for the icon/logo */
-@keyframes iconPulse {
-    0% {
-        transform: scale(1);
+@keyframes iconPulse{
+
+    0%{
+
+        transform:scale(1);
+
     }
-    50% {
-        transform: scale(1.05);
+
+    50%{
+
+        transform:scale(1.05);
+
     }
-    100% {
-        transform: scale(1);
+
+    100%{
+
+        transform:scale(1);
+
     }
+
 }
 
-/* Loading dots*/
-@keyframes loaderBounce {
-    0%, 80%, 100% {
-        transform: scale(0);
-        opacity: 0.3;
+@keyframes loaderBounce{
+
+    0%,80%,100%{
+
+        transform:scale(.3);
+
+        opacity:.4;
+
     }
-    40% {
-        transform: scale(1);
-        opacity: 1;
+
+    40%{
+
+        transform:scale(1);
+
+        opacity:1;
+
     }
+
 }
 
-/* loading text */
-@keyframes textPulse {
-    0%, 100% {
-        opacity: 0.5;
+@keyframes textPulse{
+
+    0%,100%{
+
+        opacity:.45;
+
     }
-    50% {
-        opacity: 1;
+
+    50%{
+
+        opacity:1;
+
     }
-}
 
-/*logo icon */
-.splash-icon {
-    margin-bottom: 25px;
-    animation: iconPulse 0.5s ease-in-out infinite;
-}
-
-.icon-placeholder {
-    display: inline-block;
-    width: 120px;
-    height: 120px;
-    background: #f0f2f5;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    transition: all 0.3s ease;
-}
-
-/* SVG Icon Styles */
-.icon-placeholder svg {
-    width: 80px;
-    height: 80px;
-    fill: #000000;
-}
-
-/* Image Logo Styles */
-.icon-placeholder img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-}
-
-/* title */
-.splash-title {
-    font-size: 36px;
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
-}
-
-.splash-title span {
-    color: #000000;
-}
-
-/* geolink tagline*/
-.splash-tagline {
-    color: #888888;
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 30px;
-    letter-spacing: 0.5px;
-}
-
-/* loading dots */
-.splash-loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.loader-dot {
-    width: 12px;
-    height: 12px;
-    background: #000000;
-    border-radius: 50%;
-    display: inline-block;
-    animation: loaderBounce 1.4s ease-in-out infinite both;
-}
-
-/* dot delay*/
-.loader-dot:nth-child(1) {
-    animation-delay: -0.56s;
-}
-
-.loader-dot:nth-child(2) {
-    animation-delay: -0.28s;
-}
-
-.loader-dot:nth-child(3) {
-    animation-delay: -0.14s;
-}
-
-/* loading text */
-.splash-text {
-    color: #888888;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 1px;
-    animation: textPulse 1.5s ease-in-out infinite;
-    transition: opacity 0.3s ease;
 }
 
 
 
+/* ===========================
+      RESPONSIVE
+=========================== */
 
+@media(max-width:600px){
 
+    .splash-container{
+
+        margin:20px;
+
+        padding:45px 30px;
+
+    }
+
+    .splash-title{
+
+        font-size:34px;
+
+    }
+
+    .icon-placeholder{
+
+        width:110px;
+
+        height:110px;
+
+    }
+
+    .icon-placeholder svg,
+    .icon-placeholder img{
+
+        width:70px;
+
+        height:70px;
+
+    }
+
+}

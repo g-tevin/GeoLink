@@ -1,312 +1,658 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap');
+
+:root{
+    --navy:#0B1F3A;
+    --navy-mid:#152D50;
+    --emerald:#1A9E75;
+    --emerald-light:#22C990;
+    --cream:#F7F9FC;
+    --white:#FFFFFF;
+    --text-dark:#0B1F3A;
+    --text-mid:#3D5068;
+    --text-muted:#7A90A8;
+    --radius:14px;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* 
-   SHARED CONTAINER STYLES
-  */
+body{
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(135deg,#0B1F3A 0%,#152D50 45%,#0F4A3A 100%);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+/* ============================
+   CONTAINERS
+============================ */
+
 .geolink-login-container,
 .geolink-signup-container,
-.geolink-forgot-container {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 40px;
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    animation: geolink-fadeIn 0.3s ease-in-out;
+.geolink-forgot-container{
+
+    background:var(--white);
+
+    border-radius:20px;
+
+    width:100%;
+
+    animation:geolinkFade .4s ease;
+
+    box-shadow:
+    0 25px 60px rgba(11,31,58,.30);
+
 }
 
-.geolink-login-container {
-    max-width: 420px;
+.geolink-login-container{
+
+    max-width:430px;
+
+    padding:45px;
+
 }
 
-.geolink-signup-container {
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 45px 50px;
+.geolink-forgot-container{
+
+    max-width:430px;
+
+    padding:45px;
+
 }
 
-.geolink-forgot-container {
-    max-width: 420px;
+.geolink-signup-container{
+
+    max-width:850px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    padding:50px;
+
 }
 
-/* HEADER STYLES */
-.geolink-main-title {
-    text-align: center;
-    color: #000000;
-    margin-bottom: 10px;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+
+
+/* ============================
+      HEADINGS
+============================ */
+
+.geolink-main-title{
+
+    text-align:center;
+
+    font-family:'Sora',sans-serif;
+
+    font-size:38px;
+
+    font-weight:800;
+
+    color:var(--navy);
+
+    margin-bottom:10px;
+
+    letter-spacing:-1px;
+
 }
 
-.geolink-main-title span {
-    color: #000000;
+.geolink-main-title span{
+
+    color:var(--emerald);
+
 }
 
-.geolink-sub-title {
-    text-align: center;
-    color: #666666;
-    font-size: 18px;
-    margin-bottom: 30px;
-    font-weight: 400;
+.geolink-sub-title{
+
+    text-align:center;
+
+    color:var(--text-mid);
+
+    font-size:18px;
+
+    margin-bottom:35px;
+
+    line-height:1.6;
+
 }
 
-.geolink-subtitle-text {
-    text-align: center;
-    color: #888888;
-    font-size: 14px;
-    margin-bottom: 25px;
+.geolink-subtitle-text{
+
+    text-align:center;
+
+    color:var(--text-muted);
+
+    margin-bottom:30px;
+
+    font-size:14px;
+
 }
 
-/* Form group styles*/
-.geolink-form-group {
-    margin-bottom: 18px;
+
+
+/* ============================
+      FORM
+============================ */
+
+.geolink-form-group{
+
+    margin-bottom:22px;
+
 }
 
-.geolink-form-group label {
-    display: block;
-    color: #444444;
-    font-weight: 500;
-    margin-bottom: 6px;
-    font-size: 13px;
-    letter-spacing: 0.3px;
+.geolink-form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:var(--text-dark);
+
+    font-size:14px;
+
+    font-weight:600;
+
 }
 
-.geolink-form-group .geolink-required {
-    color: #e74c3c;
-    margin-left: 2px;
+.geolink-required{
+
+    color:#e74c3c;
+
 }
 
-/* two column signup*/
-.geolink-form-row {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 0;
+.geolink-form-row{
+
+    display:flex;
+
+    gap:22px;
+
 }
 
-.geolink-form-row .geolink-form-group {
-    flex: 1;
-    margin-bottom: 18px;
+.geolink-form-row .geolink-form-group{
+
+    flex:1;
+
 }
 
-/* input style*/
+
+
+/* ============================
+      INPUTS
+============================ */
+
 .geolink-input-text,
 .geolink-input-email,
 .geolink-input-password,
 .geolink-input-number,
-.geolink-input-select {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid #dcdcdc;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: all 0.2s ease;
-    background: #fafafa;
-    color: #333333;
+.geolink-input-select{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1.5px solid #E2EAF2;
+
+    border-radius:12px;
+
+    background:var(--cream);
+
+    font-size:15px;
+
+    color:var(--text-dark);
+
+    transition:.25s;
+
+    font-family:'Inter',sans-serif;
+
+}
+
+.geolink-input-text::placeholder,
+.geolink-input-email::placeholder,
+.geolink-input-password::placeholder,
+.geolink-input-number::placeholder{
+
+    color:var(--text-muted);
+
 }
 
 .geolink-input-text:focus,
 .geolink-input-email:focus,
 .geolink-input-password:focus,
 .geolink-input-number:focus,
-.geolink-input-select:focus {
-    outline: none;
-    border-color: #000000;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+.geolink-input-select:focus{
+
+    outline:none;
+
+    background:#fff;
+
+    border-color:var(--emerald);
+
+    box-shadow:0 0 0 4px rgba(26,158,117,.12);
+
 }
 
-.geolink-input-text::placeholder,
-.geolink-input-email::placeholder,
-.geolink-input-password::placeholder,
-.geolink-input-number::placeholder {
-    color: #aaaaaa;
-    font-size: 13px;
+
+
+/* forgot password */
+
+.geolink-forgot-container .geolink-input-email{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1.5px solid #E2EAF2;
+
+    border-radius:12px;
+
+    background:var(--cream);
+
+    transition:.25s;
+
 }
 
-/* Forgot password specific input */
-.geolink-forgot-container .geolink-input-email {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid #dcdcdc;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: all 0.2s ease;
-    background: #fafafa;
-}
+.geolink-forgot-container .geolink-input-email:focus{
 
-.geolink-forgot-container .geolink-input-email:focus {
-    outline: none;
-    border-color: #000000;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
-}
+    outline:none;
 
-/* 
-   BUTTON STYLES
-    */
+    background:#fff;
+
+    border-color:var(--emerald);
+
+    box-shadow:0 0 0 4px rgba(26,158,117,.12);
+
+}
+/* ============================
+        BUTTONS
+============================ */
+
 .geolink-btn-login,
 .geolink-btn-signup,
-.geolink-btn-reset {
-    width: 100%;
-    padding: 13px;
-    background: #000000;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 5px;
-    letter-spacing: 0.5px;
+.geolink-btn-reset{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--emerald);
+
+    color:var(--white);
+
+    font-size:16px;
+
+    font-weight:600;
+
+    font-family:'Inter',sans-serif;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+
+    margin-top:8px;
+
+    letter-spacing:.3px;
+
 }
 
 .geolink-btn-login:hover,
 .geolink-btn-signup:hover,
-.geolink-btn-reset:hover {
-    background: #222222;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.geolink-btn-reset:hover{
+
+    background:var(--emerald-light);
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 30px rgba(26,158,117,.30);
+
 }
 
 .geolink-btn-login:active,
 .geolink-btn-signup:active,
-.geolink-btn-reset:active {
-    transform: translateY(0);
-    box-shadow: none;
+.geolink-btn-reset:active{
+
+    transform:translateY(0);
+
 }
 
-/* message styles*/
-.geolink-error-message {
-    background: #fef2f2;
-    color: #dc2626;
-    padding: 10px 14px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #fecaca;
-    font-size: 13px;
+
+
+/* ============================
+      ALERT MESSAGES
+============================ */
+
+.geolink-error-message{
+
+    background:#FFF4F4;
+
+    color:#C0392B;
+
+    border:1px solid #F5C6CB;
+
+    border-left:5px solid #E74C3C;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    margin-bottom:18px;
+
+    font-size:14px;
+
 }
 
-.geolink-success-message {
-    background: #f0fdf4;
-    color: #16a34a;
-    padding: 10px 14px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #bbf7d0;
-    font-size: 13px;
+.geolink-success-message{
+
+    background:#F1FCF7;
+
+    color:#138A63;
+
+    border:1px solid #BCEBD8;
+
+    border-left:5px solid var(--emerald);
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    margin-bottom:18px;
+
+    font-size:14px;
+
 }
 
-/* bottom links */
+
+
+/* ============================
+        BOTTOM LINKS
+============================ */
+
 .geolink-bottom-links,
-.geolink-bottom-link {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #eaeaea;
+.geolink-bottom-link{
+
+    text-align:center;
+
+    margin-top:28px;
+
+    padding-top:22px;
+
+    border-top:1px solid #E8EEF5;
+
+}
+
+.geolink-login-container .geolink-bottom-links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
 }
 
 .geolink-bottom-links a,
-.geolink-bottom-link a {
-    color: #000000;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
+.geolink-bottom-link a{
+
+    color:var(--emerald);
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.25s;
+
 }
 
 .geolink-bottom-links a:hover,
-.geolink-bottom-link a:hover {
-    color: #444444;
-    text-decoration: underline;
+.geolink-bottom-link a:hover{
+
+    color:var(--emerald-light);
+
+    text-decoration:none;
+
 }
 
-.geolink-forgot-password {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 14px;
+.geolink-forgot-password{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+
 }
 
 .geolink-signup-link,
-.geolink-bottom-link {
-    font-size: 14px;
-    color: #666666;
+.geolink-bottom-link{
+
+    color:var(--text-mid);
+
+    font-size:14px;
+
 }
 
-/* Login specific bottom links */
-.geolink-login-container .geolink-bottom-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+
+
+/* forgot page */
+
+.geolink-forgot-container .geolink-bottom-link{
+
+    text-align:center;
+
+    margin-top:28px;
+
+    padding-top:22px;
+
+    border-top:1px solid #E8EEF5;
+
 }
 
-/* Forgot password specific bottom link */
-.geolink-forgot-container .geolink-bottom-link {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #eaeaea;
+.geolink-forgot-container .geolink-bottom-link a{
+
+    color:var(--emerald);
+
+    font-weight:600;
+
 }
 
-.geolink-forgot-container .geolink-bottom-link a {
-    color: #000000;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
+.geolink-forgot-container .geolink-bottom-link a:hover{
+
+    color:var(--emerald-light);
+
 }
 
-.geolink-forgot-container .geolink-bottom-link a:hover {
-    color: #444444;
-    text-decoration: underline;
+
+
+/* ============================
+       RADIO BUTTONS
+============================ */
+
+.geolink-radio-group{
+
+    display:flex;
+
+    gap:30px;
+
+    padding-top:8px;
+
+    flex-wrap:wrap;
+
 }
 
-/* radio styles */
-.geolink-radio-group {
-    display: flex;
-    gap: 25px;
-    padding-top: 5px;
+.geolink-radio-option{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
 }
 
-.geolink-radio-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
+.geolink-radio-option input[type="radio"]{
+
+    width:18px;
+
+    height:18px;
+
+    cursor:pointer;
+
+    accent-color:var(--emerald);
+
 }
 
-.geolink-radio-option input[type="radio"] {
-    width: 17px;
-    height: 17px;
-    cursor: pointer;
-    accent-color: #000000;
+.geolink-radio-option label{
+
+    margin:0;
+
+    font-size:14px;
+
+    color:var(--text-dark);
+
+    font-weight:500;
+
+    cursor:pointer;
+
 }
 
-.geolink-radio-option label {
-    margin-bottom: 0;
-    cursor: pointer;
-    font-weight: 400;
-    color: #444444;
-    font-size: 14px;
+.geolink-radio-hint{
+
+    display:block;
+
+    margin-top:6px;
+
+    color:var(--text-muted);
+
+    font-size:12px;
+
 }
 
-.geolink-radio-hint {
-    color: #888888;
-    font-size: 12px;
-    display: block;
-    margin-top: 4px;
+
+
+/* ============================
+       SCROLLBAR
+============================ */
+
+.geolink-signup-container::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.geolink-signup-container::-webkit-scrollbar-thumb{
+
+    background:var(--emerald);
+
+    border-radius:10px;
+
+}
+
+.geolink-signup-container::-webkit-scrollbar-track{
+
+    background:#EDF3F8;
+
+}
+
+
+
+/* ============================
+        ANIMATIONS
+============================ */
+
+@keyframes geolinkFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+/* ============================
+        RESPONSIVE
+============================ */
+
+@media(max-width:900px){
+
+    .geolink-signup-container{
+
+        padding:35px;
+
+    }
+
+    .geolink-form-row{
+
+        flex-direction:column;
+
+        gap:0;
+
+    }
+
+}
+
+
+
+@media(max-width:600px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+    .geolink-login-container,
+    .geolink-forgot-container{
+
+        padding:30px;
+
+    }
+
+    .geolink-signup-container{
+
+        padding:30px 25px;
+
+    }
+
+    .geolink-main-title{
+
+        font-size:32px;
+
+    }
+
+    .geolink-sub-title{
+
+        font-size:16px;
+
+    }
+
+    .geolink-radio-group{
+
+        flex-direction:column;
+
+        gap:12px;
+
+    }
+
 }

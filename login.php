@@ -8,7 +8,7 @@ if (!isset($_SESSION['splash_shown'])) {
     exit();
 }
 
-require_once 'config/database.php';
+//require_once 'config/database.php';
 
 $error_message = "";
 
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 </head>
 <body>
     <div class="geolink-login-container">
-        <h1 class="geolink-main-title"><?php echo htmlspecialchars($app_name); ?></h1>
+        <h1 class="geolink-main-title"><?php echo htmlspecialchars($app_name); ?></h1> 
         
         <?php if (!empty($error_message)): ?>
             <div class="geolink-error-message">
